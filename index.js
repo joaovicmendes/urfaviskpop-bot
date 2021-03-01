@@ -8,7 +8,7 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 };
 
-let tweetInterval = (0.01*60000);
+let tweetInterval = (60*60000);
 let retriever = new MusicRetriever(process.env.LASTFM_API_KEY);
 let msg = '';
 let bot = new Bot(
