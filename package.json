@@ -1,7 +1,7 @@
 {
-  "name": "urfaviskpop",
+  "name": "urfaviskpop-bot",
   "version": "1.0.0",
-  "description": "Twitter bot that says your favorite song is Kpop.",
+  "description": "twitter kpop bot",
   "main": "index.js",
   "type": "module",
   "scripts": {

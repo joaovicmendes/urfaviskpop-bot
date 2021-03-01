@@ -6,7 +6,7 @@ import { exit } from 'process';
 
 config();
 
-let tweetInterval = (0.01*60000);
+let tweetInterval = (120*60000);
 let retriever = new MusicRetriever(process.env.LASTFM_API_KEY);
 let msg = '';
 let bot = new Bot(

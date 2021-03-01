@@ -12,12 +12,12 @@ class Bot {
     }
 
     tweet(msg) {
-        // this._bot.post('statuses/update', {status: msg}, function (error, tweet, _) {
-        //     if (!error)
-        //     console.log(tweet.text);
-        // });
+        this._bot.post('statuses/update', {status: msg}, function (error, tweet, _) {
+            if (!error)
+            console.log(tweet.text);
+        });
         this._add(msg);
-        console.log(msg);
+        // console.log(msg);
     }
 
     validate(msg) {
