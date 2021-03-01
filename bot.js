@@ -1,4 +1,5 @@
 import Twitter from 'twitter';
+import TweetsRetriever from './tweetsRetriever.js';
 
 class Bot {
     constructor(consumer_key, consumer_secret, access_token_key, access_token_secret) {
@@ -8,7 +9,7 @@ class Bot {
             access_token_key: access_token_key,
             access_token_secret: access_token_secret
         });
-        this._tweets = new Set();
+        this._tweets = TweetsRetriever.get();
     }
 
     tweet(msg) {
@@ -21,11 +22,14 @@ class Bot {
     }
 
     validate(msg) {
+        if (this._tweets.has(msg))
+            console.log("REPEATED SONG:" + msg)
         return !this._tweets.has(msg);
     }
 
     _add(msg) {
         this._tweets.add(msg);
+        TweetsRetriever.save(this._tweets);
     }
 }
 
