@@ -1,21 +1,15 @@
-import fs from 'fs';
 import request from 'sync-request';
 
 class MusicRetriever {
     constructor(api_key) {
         this._api_key = api_key;
         this._requestedPage = 1;
-        this._fetchedFromLocalFile = false;
         this._songList = this._fetchTopTracks(this._requestedPage);
     }
 
     getSong() {
-        // If there are no more music to tweet, fetch another page on LastFM
+        // If there are no more songs to tweet, fetch another page on LastFM
         if (this._songList.length == 0) {
-            if (this._fetchedFromLocalFile) {
-                console.log("FATAL: Couldn't fetch new songs.\n");
-                process.exit(1);
-            }
             this._requestedPage++;
             this._songList = this._fetchTopTracks(this._requestedPage);
         }
@@ -32,15 +26,12 @@ class MusicRetriever {
         console.log("New request to LastFM API - Page: " + page);
         ret = this._syncRequest(url);
 
-        // If can't fetch from LastFM, attempt to fetch from local file (not that useful)
         if (!ret) {
             console.log("ERROR: Couldn't fetch songs from LastFM.")
-            ret = JSON.parse(fs.readFileSync('samplemusicdata.json')).tracks.track;
-            this._fetchedFromLocalFile = true;
-        } else {
-            ret = JSON.parse(ret).tracks.track;
+            process.exit(1);
         }
 
+        ret = JSON.parse(ret).tracks.track;
         return this._shuffle(ret);
     }
 

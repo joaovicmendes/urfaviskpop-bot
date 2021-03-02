@@ -14,13 +14,10 @@ class Bot {
 
     tweet(msg) {
         this._bot.post('statuses/update', {status: msg}, function (error, tweet, _) {
-            if (!error)
-                console.log(tweet.text);
-            else
-                console.log(error);
+            if (!error) { console.log(tweet.text); }
+            else { console.log(error); }
         });
         this._add(msg);
-        // console.log(msg);
     }
 
     validate(msg) {
