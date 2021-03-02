@@ -4,8 +4,16 @@ class TweetsRetriever {
     static path = 'tweets.json';
 
     static get() {
-        let rawData = fs.readFileSync(TweetsRetriever.path).toString('utf-8');
-        return new Set(rawData.split("\n"));
+        let rawData;
+        let ret;
+        try {
+            rawData = fs.readFileSync(TweetsRetriever.path).toString('utf-8');
+            ret = new Set(rawData.split("\n"));
+        } catch (error) {
+            ret = new Set();
+        }
+
+        return ret;
     }
 
     static save(tweets) {
