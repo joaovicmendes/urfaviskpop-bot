@@ -16,7 +16,7 @@ class MusicRetriever {
 
         // Selecting the top track from queue and removing it
         let track = this._songList.shift();
-        return track.name + " - " + track.artist.name;
+        return new String(track.name + " - " + track.artist.name).toLowerCase();
     }
 
     _fetchTopTracks(page = 1) {
