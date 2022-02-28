@@ -1,5 +1,6 @@
 import { IPublisher } from "./publisher";
 import { IMusicRetriever, Music } from "./retriever";
+import { IStorer } from "./storer";
 
 export class Bot {
 
@@ -9,6 +10,7 @@ export class Bot {
     constructor(
         private readonly publisher: IPublisher,
         private readonly retriever: IMusicRetriever,
+        private readonly storer: IStorer,
     ) {}
 
     public async execute(): Promise<void> {
@@ -16,20 +18,27 @@ export class Bot {
             const song = await this.getSongNotPublished();
             const message = `${song} is actually kpop`;
             await this.publisher.publish(message);
+            await this.storer.store(song);
         } catch (error) {
             console.error(`[Bot][execute] Error: ${error}`)
         }
     }
 
     private async getSongNotPublished(): Promise<string> {
-        for (const song of this.songList) {
-            // TODO: if not posted
-            return song;
+        try {
+            for (const song of this.songList) {
+                const songWasPosted = await this.storer.query(song);
+                if (!songWasPosted) {
+                    return song;
+                }
+            }
+    
+            this.page += 1;
+            this.songList = await this.retriever.fetchTopTracks(this.page);
+            return this.getSongNotPublished();
+        } catch (error) {
+            throw(error);
         }
-
-        this.page += 1;
-        await this.retriever.fetchTopTracks(this.page);
-        return this.getSongNotPublished();
     }
 
 }
