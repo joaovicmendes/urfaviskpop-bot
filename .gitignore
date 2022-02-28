@@ -1,7 +1,5 @@
 node_modules
-build
-npm-debug.log
+dist
 .env
 .DS_Store
 .vscode
-tweets.json
