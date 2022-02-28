@@ -1,5 +1,5 @@
-import { IMusicRetriever, Music } from "..";
-import { IRequester } from "../../requester";
+import { IMusicRetriever, Music } from ".";
+import { IRequester } from "../requester";
 
 export class LastFmRetriever implements IMusicRetriever {
 

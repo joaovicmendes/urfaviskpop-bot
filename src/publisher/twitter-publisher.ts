@@ -1,6 +1,6 @@
 import Twitter from "twitter";
-import { ITwitterConfig } from "..";
-import { IPublisher } from "../interfaces/i-publisher";
+import { ITwitterConfig } from ".";
+import { IPublisher } from "./interfaces/i-publisher";
 
 export class TwitterPublisher implements IPublisher {
 

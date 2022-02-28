@@ -1,5 +1,5 @@
 import axios from "axios";
-import { IRequester, IRequestOptions, IResponse } from "..";
+import { IRequester, IRequestOptions, IResponse } from ".";
 
 export class AxiosRequester implements IRequester {
 
