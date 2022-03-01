@@ -19,7 +19,7 @@ export class LastFmRetriever implements IMusicRetriever {
             const tracks = response.data.tracks.track.map((track: any) => {
                 return `${track.name} by ${track.artist.name}`.toLowerCase();
             });
-            return tracks;
+            return tracks.sort(() => Math.random() - 0.5);
         } catch (error) {
             console.error(`[LastFmRetriever][fetchTopTracks] Error: when fetching top tracks, ${error}`);
             throw(error);

@@ -14,7 +14,6 @@ const publisher: IPublisher = new TwitterPublisher({
     accessTokenSecret: process.env.ACCESS_TOKEN_SECRET || ""
 });
 
-
 const retriever: IMusicRetriever = new LastFmRetriever(
     process.env.LASTFM_API_KEY || "",
     new AxiosRequester()

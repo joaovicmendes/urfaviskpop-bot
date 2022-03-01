@@ -20,11 +20,11 @@ export class DynamoDbStorer implements IStorer {
         this.dynamoClient.put(params)
         .promise()
         .then(data => {
-            console.info(`Succesfully put data on DynamoDb, ${data}`);
+            console.info(`[DynamoDb][store] Succesfully put data on DynamoDb, '${song}'`);
             return data;
         })
         .catch(error => {
-            console.error(`Failed to put data on DynamoDb at ${params}`);
+            console.error(`[DynamoDb][store] Failed to put data on DynamoDb at ${JSON.stringify(params)}`);
             Promise.reject(error);
         });
     }
@@ -37,13 +37,13 @@ export class DynamoDbStorer implements IStorer {
         return this.dynamoClient.get(params)
         .promise()
         .then(data => {
-            console.info(`Succesfully retrieved data from DynamoDb, ${data}`);
+            console.info(`[DynamoDb][query] Succesfully retrieved data from DynamoDb, ${JSON.stringify(data.Item)}`);
             if (data.Item) {
                 return data.Item.song;
             }
         })
         .catch(error => {
-            console.error(`Failed to request data from DynamoDb at ${params}`);
+            console.error(`[DynamoDb][query] Failed to request data from DynamoDb at ${JSON.stringify(params)}`);
             Promise.reject(error);
         });
     }
