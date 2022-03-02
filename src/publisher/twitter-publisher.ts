@@ -16,12 +16,16 @@ export class TwitterPublisher implements IPublisher {
     }
 
     async publish(msg: string): Promise<void> {
-        this.twitter.post("statuses/update", { status: msg }, (error, tweet, _) => {
-            if (!error) {
-                console.info(`[TwitterPublisher][publish] Published '${tweet.text}' succesfully`);
-            } else {
-                console.error(`[TwitterPublisher][publish] Error publishing '${tweet.text}', ${error}`);
-            }
+        return new Promise((resolve, reject) => {
+            this.twitter.post("statuses/update", { status: msg }, (error, tweet, _) => {
+                if (!error) {
+                    console.info(`[TwitterPublisher][publish] Published '${tweet.text}' succesfully`);
+                    resolve();
+                } else {
+                    console.error(`[TwitterPublisher][publish] Error publishing '${tweet.text}', ${error}`);
+                    reject(error);
+                }
+            })
         });
     }
 

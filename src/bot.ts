@@ -19,6 +19,7 @@ export class Bot {
             const message = `${song} is actually kpop`;
             await this.publisher.publish(message);
             await this.storer.store(song);
+            console.info(`[Bot][execute] Finished processing ${song}`);
         } catch (error) {
             console.error(`[Bot][execute] Error: ${error}`)
         }

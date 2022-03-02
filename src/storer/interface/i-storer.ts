@@ -1,4 +1,4 @@
 export interface IStorer {
-    store(data: string): Promise<void>;
+    store(data: string): Promise<any>;
     query(data: string): Promise<string>;
 }

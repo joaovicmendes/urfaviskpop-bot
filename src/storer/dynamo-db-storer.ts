@@ -1,4 +1,5 @@
 import AWS from "aws-sdk";
+import { PromiseResult } from "aws-sdk/lib/request";
 import { IStorer } from ".";
 import { IStorerConfig } from "./interface/i-storer-config";
 
@@ -12,12 +13,12 @@ export class DynamoDbStorer implements IStorer {
         this.dynamoClient = new AWS.DynamoDB.DocumentClient();
     }
     
-    public async store(song: string): Promise<void> {
+    public async store(song: string): Promise<any> {
         const params = {
             TableName: this.TABLE_NAME,
             Item: { "song": song }
         };
-        this.dynamoClient.put(params)
+        return this.dynamoClient.put(params)
         .promise()
         .then(data => {
             console.info(`[DynamoDb][store] Succesfully put data on DynamoDb, '${song}'`);
