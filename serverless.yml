@@ -15,4 +15,4 @@ functions:
   bot:
     handler: src/lambda/handler.bot
     events:
-     - schedule: rate(1 hour)
+     - schedule: rate(2 hours)

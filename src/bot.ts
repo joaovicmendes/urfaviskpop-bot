@@ -5,7 +5,7 @@ import { IStorer } from "./storer";
 export class Bot {
 
     private songList: Music[] = [];
-    private page: number = 0;
+    private page: number = -1;
 
     constructor(
         private readonly publisher: IPublisher,
@@ -15,6 +15,10 @@ export class Bot {
 
     public async execute(): Promise<void> {
         try {
+            if (this.page === -1) {
+                this.page = await this.storer.queryLastPage() || 0;
+            }
+
             const song = await this.getSongNotPublished();
             const message = `${song} is actually kpop`;
             await this.publisher.publish(message);
@@ -35,7 +39,11 @@ export class Bot {
             }
     
             this.page += 1;
-            this.songList = await this.retriever.fetchTopTracks(this.page);
+            const [_, songList] = await Promise.all([
+                this.storer.storeLastPage(this.page),
+                this.retriever.fetchTopTracks(this.page)
+            ]);
+            this.songList = songList;
             return this.getSongNotPublished();
         } catch (error) {
             throw(error);
