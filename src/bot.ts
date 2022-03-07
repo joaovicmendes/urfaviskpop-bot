@@ -17,6 +17,7 @@ export class Bot {
         try {
             if (this.page === -1) {
                 this.page = await this.storer.queryLastPage() || 0;
+                this.songList = await this.retriever.fetchTopTracks(this.page);
             }
 
             const song = await this.getSongNotPublished();
