@@ -14,14 +14,14 @@ export class LastFmRetriever implements IMusicRetriever {
         const url = this.BASE_URL;
         const topChartsUrl = `?method=chart.gettoptracks&api_key=${this.apiKey}&format=json&page=${page}`;
         try {
-            console.info(`[LastFmRetriever][fetchTopTracks] Fetching top tracks data`);
+            console.info(`[LastFmRetriever][fetchTopTracks] Fetching top tracks data, page ${page}`);
             const response = await this.requester.get(url+topChartsUrl);
             const tracks = response.data.tracks.track.map((track: any) => {
                 return `${track.name} by ${track.artist.name}`.toLowerCase();
             });
             return tracks.sort(() => Math.random() - 0.5);
         } catch (error) {
-            console.error(`[LastFmRetriever][fetchTopTracks] Error: when fetching top tracks, ${error}`);
+            console.error(`[LastFmRetriever][fetchTopTracks] Error: when fetching top tracks, page ${page}, ${error}`);
             throw(error);
         }
     }
